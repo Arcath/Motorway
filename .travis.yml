@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.12"
+  - "1.0"
+  - "1.8"
+sudo: false
+script:
+  - "grunt test"
+  - "grunt coverage"
+after_success: "grunt coveralls"

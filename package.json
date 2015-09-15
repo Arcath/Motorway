@@ -1,0 +1,31 @@
+{
+  "name": "motorway",
+  "version": "0.0.0",
+  "description": "Asyncronous Flow Control",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "express",
+    "management"
+  ],
+  "author": "Adam Laycock",
+  "license": "MIT",
+  "dependencies": {
+    "sodb": "^0.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "coffee-coverage": "^0.6.2",
+    "coffee-script": "^1.9.2",
+    "coveralls": "^2.11.2",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-shell": "^1.1.2",
+    "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "0.0.2"
+  }
+}
