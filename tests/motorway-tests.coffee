@@ -45,7 +45,7 @@ describe 'Motorway', ->
 
     mway.addJunction('one')
     mway.addAction('one', -> @rejoin())
-    mway.addJunction('two', 'one')
+    mway.addJunction('two', ['one'])
     mway.addAction('two', -> done())
 
     mway.start('one')
@@ -73,8 +73,8 @@ describe 'Motorway', ->
     mway = new Motorway()
 
     mway.addJunction('init')
-    mway.addJunction('configure', 'init')
-    mway.addJunction('launch', 'configure')
+    mway.addJunction('configure', ['init'])
+    mway.addJunction('launch', ['configure'])
 
     mway.addAction('init', loadObjects)
     mway.addAction('configure', setFoo)
