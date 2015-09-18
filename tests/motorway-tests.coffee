@@ -82,3 +82,33 @@ describe 'Motorway', ->
     mway.addAction('launch', expectFooBar)
 
     mway.start('init')
+
+  it 'should support async junctions', (done) ->
+    count = null
+
+    mway = new Motorway()
+    mway.addJunction('init')
+    mway.addJunction('add', ['init'])
+    mway.addJunction('subtract', ['init'])
+    mway.addJunction('finish', ['add', 'subtract'])
+
+    mway.addAction 'init', ->
+      count = 0
+      @rejoin()
+
+    mway.addAction 'add', ->
+      count += 1
+      @rejoin()
+
+    mway.addAction 'subtract', ->
+      count -= 1
+      setTimeout(=>
+        @rejoin()
+      , 100)
+
+    mway.addAction 'finish', ->
+      expect(count).to.eq 0
+      done()
+      @rejoin()
+
+    mway.start('init')
