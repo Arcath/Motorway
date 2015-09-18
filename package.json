@@ -1,6 +1,6 @@
 {
   "name": "motorway",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Asyncronous Flow Control",
   "main": "lib/index.js",
   "scripts": {
@@ -12,6 +12,10 @@
   ],
   "author": "Adam Laycock",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Arcath/Motorway"
+  },
   "dependencies": {
     "sodb": "^0.1.1"
   },
