@@ -28,6 +28,12 @@ module.exports =
       else
         @actions.add({junction: junction, func: func})
 
+    dropJunction: (name) ->
+      junction = @junctions.findOne({name: name})
+      junction.complete = true
+      junction.runAfter = []
+      @junctions.update(junction)
+
     start: (junction) ->
       runner = new Runner(@junctions.findOne({name: junction}), @actions.where({junction: junction}), @emitter)
       runner.start()
