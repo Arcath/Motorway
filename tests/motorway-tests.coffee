@@ -116,17 +116,21 @@ describe 'Motorway', ->
   it 'should support async actions', (done) ->
     mway = new Motorway()
     mway.addJunction('init')
-    mway.addJunction('finish')
+    mway.addJunction('finish', ['init'])
 
     mway.addAction 'init', ->
       setTimeout(=>
+        console.log 'f1'
         @rejoin()
       , 1500)
 
     mway.addAction 'init', ->
       setTimeout(=>
+        console.log 'f2'
         @rejoin()
       , 1500)
 
     mway.addAction 'finish', ->
       done()
+
+    mway.start('init')
