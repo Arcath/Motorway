@@ -1,8 +1,8 @@
 {
   "name": "motorway",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Asyncronous Flow Control",
-  "main": "lib/index.js",
+  "main": "lib/motorway.js",
   "scripts": {
     "test": "grunt test"
   },
