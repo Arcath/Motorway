@@ -14,10 +14,11 @@ module.exports =
       @junctions = new sodb()
 
       @emitter.on 'next', (junction) => @next(junction)
+      @emitter.on 'start', (junction) => @start(junction)
 
       return this
 
-    addJunction: (name, runAfter =  null) ->
+    addJunction: (name, runAfter = []) ->
       @junctions.add({name: name, runAfter: runAfter, started: 0, run: 0, complete: false})
 
     addAction: (junction, func) ->
@@ -32,7 +33,13 @@ module.exports =
       runner.start()
 
     next: (junction) ->
-      junctions = @junctions.where({runAfter: junction})
+      thisJunction = @junctions.findOne({name: junction})
+      thisJunction.complete = true
+      @junctions.update(thisJunction)
 
-      for junc in junctions
-        @start(junc.name)
+      possibles = @junctions.where({runAfter: {includes: junction}})
+
+      for junc in possibles
+        results = @junctions.where({name: junc.runAfter}, {complete: false})
+        if results.length == 0
+          @emitter.emit 'start', junc.name

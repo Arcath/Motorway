@@ -45,7 +45,7 @@ describe 'Motorway', ->
 
     mway.addJunction('one')
     mway.addAction('one', -> @rejoin())
-    mway.addJunction('two', 'one')
+    mway.addJunction('two', ['one'])
     mway.addAction('two', -> done())
 
     mway.start('one')
@@ -73,12 +73,62 @@ describe 'Motorway', ->
     mway = new Motorway()
 
     mway.addJunction('init')
-    mway.addJunction('configure', 'init')
-    mway.addJunction('launch', 'configure')
+    mway.addJunction('configure', ['init'])
+    mway.addJunction('launch', ['configure'])
 
     mway.addAction('init', loadObjects)
     mway.addAction('configure', setFoo)
     mway.addAction('configure', setBar)
     mway.addAction('launch', expectFooBar)
+
+    mway.start('init')
+
+  it 'should support async junctions', (done) ->
+    count = null
+
+    mway = new Motorway()
+    mway.addJunction('init')
+    mway.addJunction('add', ['init'])
+    mway.addJunction('subtract', ['init'])
+    mway.addJunction('finish', ['add', 'subtract'])
+
+    mway.addAction 'init', ->
+      count = 0
+      @rejoin()
+
+    mway.addAction 'add', ->
+      count += 1
+      @rejoin()
+
+    mway.addAction 'subtract', ->
+      count -= 1
+      setTimeout(=>
+        @rejoin()
+      , 100)
+
+    mway.addAction 'finish', ->
+      expect(count).to.eq 0
+      done()
+      @rejoin()
+
+    mway.start('init')
+
+  it 'should support async actions', (done) ->
+    mway = new Motorway()
+    mway.addJunction('init')
+    mway.addJunction('finish', ['init'])
+
+    mway.addAction 'init', ->
+      setTimeout(=>
+        @rejoin()
+      , 1500)
+
+    mway.addAction 'init', ->
+      setTimeout(=>
+        @rejoin()
+      , 1500)
+
+    mway.addAction 'finish', ->
+      done()
 
     mway.start('init')
