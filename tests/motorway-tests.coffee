@@ -132,3 +132,28 @@ describe 'Motorway', ->
       done()
 
     mway.start('init')
+
+  it 'should let you drop junctions', (done) ->
+    mway = new Motorway()
+
+    passed = false
+
+    mway.addJunction('pass')
+    mway.addJunction('fail', ['pass'])
+    mway.addJunction('test', ['pass', 'fail'])
+
+    mway.addAction 'pass', ->
+      passed = true
+      @rejoin()
+
+    mway.addAction 'fail', ->
+      passed = false
+      @rejoin()
+
+    mway.addAction 'test', ->
+      expect(passed).to.eq true
+      done()
+
+    mway.dropJunction('fail')
+
+    mway.start('pass')
