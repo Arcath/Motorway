@@ -60,3 +60,5 @@ Once everything is defined you need to start Motorway which is done like this th
 ```javascript
 mway.start('init')
 ```
+
+And thats it! Motorway will now run your junctions and actions in order.
