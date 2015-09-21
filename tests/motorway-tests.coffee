@@ -120,13 +120,11 @@ describe 'Motorway', ->
 
     mway.addAction 'init', ->
       setTimeout(=>
-        console.log 'f1'
         @rejoin()
       , 1500)
 
     mway.addAction 'init', ->
       setTimeout(=>
-        console.log 'f2'
         @rejoin()
       , 1500)
 
