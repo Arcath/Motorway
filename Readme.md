@@ -62,3 +62,14 @@ mway.start('init')
 ```
 
 And thats it! Motorway will now run your junctions and actions in order.
+
+## Testing your apps
+
+Assuming that your Motorway ends in a junction called `launch` which has the action to host your application you would not want it to do this when testing, to help with this you can drop junctions to skip them. For example:
+
+```javascript
+mway.dropJunction('launch')
+mway.start('init')
+```
+
+You will now get your full application loaded but not hosted, perfect for running tests
