@@ -112,3 +112,21 @@ describe 'Motorway', ->
       @rejoin()
 
     mway.start('init')
+
+  it 'should support async actions', (done) ->
+    mway = new Motorway()
+    mway.addJunction('init')
+    mway.addJunction('finish')
+
+    mway.addAction 'init', ->
+      setTimeout(=>
+        @rejoin()
+      , 1500)
+
+    mway.addAction 'init', ->
+      setTimeout(=>
+        @rejoin()
+      , 1500)
+
+    mway.addAction 'finish', ->
+      done()
