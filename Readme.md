@@ -1,6 +1,6 @@
 # Motorway
 
-[![Build Status](https://travis-ci.org/Arcath/Motorway.svg?branch=master)](https://travis-ci.org/Arcath/Motorway) [![Coverage Status](https://coveralls.io/repos/Arcath/Motorway/badge.svg?branch=master&service=github)](https://coveralls.io/github/Arcath/Motorway?branch=master) [![Dependency Status](https://david-dm.org/arcath/Motorway.svg)](https://david-dm.org/arcath/Motorway)
+[![Build Status](https://travis-ci.org/Arcath/Motorway.svg?branch=master)](https://travis-ci.org/Arcath/Motorway) [![Coverage Status](https://coveralls.io/repos/Arcath/Motorway/badge.svg?branch=master&service=github)](https://coveralls.io/github/Arcath/Motorway?branch=master) [![Dependency Status](https://david-dm.org/arcath/Motorway.svg)](https://david-dm.org/arcath/Motorway) [![npm version](https://badge.fury.io/js/motorway.svg)](http://badge.fury.io/js/motorway)
 
 Asyncronous Flow control for NodeJS Applications
 
