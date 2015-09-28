@@ -162,7 +162,7 @@ describe 'Motorway', ->
     mway = new Motorway()
 
     mway.addJunction 'init'
-    mway.loadJunction '../support/junction.coffee'
+    mway.loadJunction '../support/junction'
     mway.addJunction 'finish', ['configure']
 
     mway.addAction 'init', ->
