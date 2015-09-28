@@ -157,3 +157,18 @@ describe 'Motorway', ->
     mway.dropJunction('fail')
 
     mway.start('pass')
+
+  it 'should load a junction from a file', (done) ->
+    mway = new Motorway()
+
+    mway.addJunction 'init'
+    mway.loadJunction '../support/junction.coffee'
+    mway.addJunction 'finish', ['configure']
+
+    mway.addAction 'init', ->
+      @rejoin()
+
+    mway.addAction 'finish', ->
+      done()
+
+    mway.start 'init'
