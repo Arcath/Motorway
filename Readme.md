@@ -1,75 +1,50 @@
 # Motorway
 
-Flow control for NodeJS Applications
+[![Build Status](https://travis-ci.org/Arcath/Motorway.svg?branch=master)](https://travis-ci.org/Arcath/Motorway) [![Coverage Status](https://coveralls.io/repos/Arcath/Motorway/badge.svg?branch=master&service=github)](https://coveralls.io/github/Arcath/Motorway?branch=master) [![Dependency Status](https://david-dm.org/arcath/Motorway.svg)](https://david-dm.org/arcath/Motorway)
 
-## Why?
-
-My applications usually end up with a file that calls lots of functions in order, with some functions that require async support etc... which can result in a fairly messy file.
-
-Motorway fixes this by defining logical steps and the actions required for that step.
+Asyncronous Flow control for NodeJS Applications
 
 ## Usage
 
-Motorway is fundamentally 2 lists junctions and actions.
-
-Junctions are lists of actions which wait for all actions to complete before completing and triggering the next junction(s).
-
-Adding a junction takes 2 arguments, the name of the junction and the names of the junctions that need to have finished before it can run. For example:
+Require Motorway and create a new instance:
 
 ```javascript
-Motorway = require 'motorway'
-mway = new Motorway()
-
-mway.addJunction('init')
-mway.addJunction('configure', ['init'])
-mway.addJunction('load-external-services', ['init'])
-mway.addJunction('launch', ['configure', 'load-external-services'])
+Motorway = require('motorway')
+motorway = new Motorway()
 ```
 
-These junctions now need actions adding to them which works like this:
+### motorway.addJunction(name[, runAfter])
+
+Adds a junction identified by _name_ which runs after all the junctions in _runAfter_ finish
+
+### motorway.addAction(junction, function)
+
+Adds _function_ as an action for _junction_
+
+Actions __must end with__ `this.rejoin()` so that motorway knows when to flag the action as complete.
+
+### motorway.loadJunction(modulePath)
+
+Load a junction from _modulePath_. Your junction file should look like this:
 
 ```javascript
-object = null
-
-mway.addAction('init', function(){
-  object = {}
-  this.rejoin()
-})
-
-mway.addAction('configure', function(){
-  object.foo = 'bar'
-  object.where = 'here'
-  this.rejoin()
-})
-
-mway.addAction('load-external-services', function(){
-  object.someApi = 'an object'
-  this.rejoin()
-})
-
-mway.addAction('launch', function(){
-  object.listen 3000
-  this.rejoin()
-})
+module.exports = {
+  name: 'configure',
+  runAfter: ['init'],
+  actions: [
+    function(){
+      this.rejoin()
+    }
+  ]
+}
 ```
 
-All actions need to end with `this.rejoin()` which lets Motorway know that this action is done and it can (if all actions are finished) start the next junction.
+### motorway.dropJunction(name)
 
-Once everything is defined you need to start Motorway which is done like this this:
+Drops the junction _name_ so that it wont run.
 
-```javascript
-mway.start('init')
-```
+Useful for preventing a launch action etc... in tests.
 
-And thats it! Motorway will now run your junctions and actions in order.
+### motorway.start(name)
 
-## Testing your apps
-
-Assuming that your Motorway ends in a junction called `launch` which has the action to host your application you would not want it to do this when testing, to help with this you can drop junctions to skip them. For example:
-
-```javascript
-mway.dropJunction('launch')
-mway.start('init')
-```
-
-You will now get your full application loaded but not hosted, perfect for running tests
+Starts your motoway at the junction _name_
