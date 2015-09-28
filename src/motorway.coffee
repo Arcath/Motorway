@@ -18,6 +18,14 @@ module.exports =
 
       return this
 
+    loadJunction: (modulePath) ->
+      junction = require modulePath
+
+      @addJunction junction.name, junction.runAfter
+
+      for action in junction.actions
+        @addAction junction.name, action
+
     addJunction: (name, runAfter = []) ->
       @junctions.add({name: name, runAfter: runAfter, started: 0, run: 0, complete: false})
 
