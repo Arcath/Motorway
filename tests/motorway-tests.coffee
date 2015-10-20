@@ -1,3 +1,4 @@
+fs = require 'fs'
 path = require 'path'
 
 expect = require('chai').expect
@@ -172,3 +173,19 @@ describe 'Motorway', ->
       done()
 
     mway.start 'init'
+
+  it 'should support actions with async components', (done) ->
+    mway = new Motorway()
+
+    mway.addJunction 'test'
+    mway.addJunction 'finish', ['test']
+
+    mway.addAction 'test', ->
+      _runner = this
+      fs.readFile path.join(__dirname, '..', 'Readme.md'), (err, contents) ->
+        _runner.rejoin()
+
+    mway.addAction 'finish', ->
+      done()
+
+    mway.start 'test'
