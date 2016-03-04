@@ -43,7 +43,12 @@ module.exports = {
 
 Drops the junction _name_ so that it wont run.
 
-Useful for preventing a launch action etc... in tests.
+
+### motorway.replaceJunction(oldJunctionName, newJunctionName)
+
+Creates a new junction call _newJUnctionName_ with the runAfter details from _oldJunctionName_. It then calls dropJunction for _oldJunctionName_
+
+Useful for replacing the `listen` junction with a `test` junction in your tests
 
 ### motorway.start(name)
 
