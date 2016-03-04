@@ -189,3 +189,22 @@ describe 'Motorway', ->
       done()
 
     mway.start 'test'
+
+  it 'should let you replace a junction', (done) ->
+    mway = new Motorway()
+
+    mway.addJunction 'test'
+    mway.addJunction 'after', ['test']
+
+    mway.addAction 'test', ->
+      @rejoin()
+
+    mway.addAction 'after', ->
+      throw 'Test Failed'
+
+    mway.replaceJunction 'after', 'pass'
+
+    mway.addAction 'pass', ->
+      done()
+
+    mway.start 'test'

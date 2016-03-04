@@ -57,3 +57,9 @@ module.exports =
         results = @junctions.where({name: junc.runAfter}, {complete: false})
         if results.length == 0
           @emitter.emit 'start', junc.name
+
+    replaceJunction: (oldJunctionName, newJunctionName) ->
+      oldJunction = @junctions.findOne({name: oldJunctionName})
+
+      @dropJunction(oldJunctionName)
+      @addJunction(newJunctionName, oldJunction.runAfter)
